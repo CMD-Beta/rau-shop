@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>RaU Shop</title>
+  <title>🛒 RaU Shop</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <style>
@@ -11,12 +11,26 @@
       color: white;
       font-family: Arial, sans-serif;
       padding: 20px;
+      margin: 0;
+    }
+    h2 {
+      text-align: center;
+      color: #22c55e;
+    }
+    p {
+      text-align: center;
+      margin-bottom: 30px;
     }
     .card {
       background: #1e293b;
       border-radius: 12px;
       padding: 16px;
       margin-bottom: 16px;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    }
+    .card h3 {
+      margin-top: 0;
     }
     button {
       background: #22c55e;
@@ -24,30 +38,90 @@
       color: black;
       padding: 12px;
       border-radius: 8px;
-      width: 100%;
+      width: 80%;
       font-size: 16px;
       cursor: pointer;
+      margin-top: 10px;
+    }
+    select {
+      margin-bottom: 20px;
+      padding: 8px;
+      border-radius: 6px;
+      border: none;
+      font-size: 16px;
     }
   </style>
 </head>
 <body>
 
 <h2>🛒 RaU Shop</h2>
+<p>Выберите валюту для отображения цены и пакет Robux для заказа</p>
+
+<!-- Выбор валюты -->
+<select id="currency" onchange="updatePrices()">
+  <option value="USD">USD $</option>
+  <option value="EUR">EUR €</option>
+  <option value="RUB">RUB ₽</option>
+  <option value="AZN">AZN ₼</option>
+</select>
+
+<!-- Пакеты Robux -->
+<div class="card">
+  <h3>💰 400 Robux</h3>
+  <p id="price1">Цена: 5 USD</p>
+  <button onclick="order('400 Robux')">Оформить заказ</button>
+</div>
 
 <div class="card">
-  <h3>💰 Robux</h3>
-  <p>Продажа валюты Roblox</p>
-  <button onclick="order()">Оформить заказ</button>
+  <h3>💰 800 Robux</h3>
+  <p id="price2">Цена: 10 USD</p>
+  <button onclick="order('800 Robux')">Оформить заказ</button>
+</div>
+
+<div class="card">
+  <h3>💰 1200 Robux</h3>
+  <p id="price3">Цена: 15 USD</p>
+  <button onclick="order('1200 Robux')">Оформить заказ</button>
+</div>
+
+<div class="card">
+  <h3>💰 2000 Robux</h3>
+  <p id="price4">Цена: 25 USD</p>
+  <button onclick="order('2000 Robux')">Оформить заказ</button>
 </div>
 
 <script>
-  const tg = window.Telegram.WebApp;
-  tg.expand();
+const tg = window.Telegram.WebApp;
+tg.expand();
 
-  function order() {
-    tg.sendData("Заказ: Robux");
-    alert("Заявка отправлена продавцу");
+// Базовые цены в USD
+const basePrices = [5, 10, 15, 25];
+
+// Курс валют (можно обновлять вручную)
+const rates = {
+  USD: 1,
+  EUR: 0.93,
+  RUB: 100,
+  AZN: 1.7
+};
+
+function updatePrices() {
+  const currency = document.getElementById("currency").value;
+  for (let i = 0; i < basePrices.length; i++) {
+    const priceElem = document.getElementById("price" + (i+1));
+    const converted = (basePrices[i] * rates[currency]).toFixed(2);
+    priceElem.innerText = "Цена: " + converted + " " + currency;
   }
+}
+
+// Функция заказа
+function order(packageName) {
+  tg.sendData("Заказ: " + packageName + " (" + document.getElementById("currency").value + ")");
+  alert("Заявка отправлена продавцу: " + packageName);
+}
+
+// Обновляем цены при загрузке
+updatePrices();
 </script>
 
 </body>
