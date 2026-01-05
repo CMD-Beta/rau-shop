@@ -1,1 +1,54 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>RaU Shop</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <style>
+    body {
+      background: #0f172a;
+      color: white;
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    .card {
+      background: #1e293b;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+    button {
+      background: #22c55e;
+      border: none;
+      color: black;
+      padding: 12px;
+      border-radius: 8px;
+      width: 100%;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
 
+<h2>🛒 RaU Shop</h2>
+
+<div class="card">
+  <h3>💰 Robux</h3>
+  <p>Продажа валюты Roblox</p>
+  <button onclick="order()">Оформить заказ</button>
+</div>
+
+<script>
+  const tg = window.Telegram.WebApp;
+  tg.expand();
+
+  function order() {
+    tg.sendData("Заказ: Robux");
+    alert("Заявка отправлена продавцу");
+  }
+</script>
+
+</body>
+</html>
