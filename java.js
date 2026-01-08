@@ -19,7 +19,7 @@ const symbols = {
 
 const MARKUP_AZN = 1;
 
-fetch("./products.json")
+fetch("products.json")
   .then((r) => r.json())
   .then((data) => {
     products = data;
