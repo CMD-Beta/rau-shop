@@ -3,28 +3,25 @@ const currencySelect = document.getElementById("currency");
 
 let products = [];
 
-/* Курсы валют (можно потом заменить на API) */
 const rates = {
   AZN: 1,
-  RUB: 57,   // 1 AZN ≈ 57 RUB
-  USD: 0.59, // 1 AZN ≈ 0.59 USD
-  EUR: 0.54  // 1 AZN ≈ 0.54 EUR
+  RUB: 57,
+  USD: 0.59,
+  EUR: 0.54,
 };
 
 const symbols = {
   AZN: "₼",
   RUB: "₽",
   USD: "$",
-  EUR: "€"
+  EUR: "€",
 };
 
-/* Надбавка */
 const MARKUP_AZN = 1;
 
-/* Загрузка товаров */
-fetch("data/products.json")
-  .then(r => r.json())
-  .then(data => {
+fetch("./data/products.json")
+  .then((r) => r.json())
+  .then((data) => {
     products = data;
     render();
   });
@@ -40,15 +37,13 @@ function render() {
   const cur = currencySelect.value;
   productsEl.innerHTML = "";
 
-  products.forEach(p => {
+  products.forEach((p) => {
     productsEl.innerHTML += `
       <div class="card">
-        <img src="${p.image}">
+        <img src="${p.image}" alt="${p.title}" />
         <h3>${p.title}</h3>
         <p>${p.desc}</p>
-        <div class="price">
-          ${convert(p.priceAZN, cur)} ${symbols[cur]}
-        </div>
+        <div class="price">${convert(p.priceAZN, cur)} ${symbols[cur]}</div>
       </div>
     `;
   });
