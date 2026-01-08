@@ -36,7 +36,7 @@ function convert(priceAZN, currency) {
 function render() {
   const cur = currencySelect.value;
   productsEl.innerHTML = "";
-
+  fetch("products.json")
   products.forEach((p) => {
     productsEl.innerHTML += `
       <div class="card">
